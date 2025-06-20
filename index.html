@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>VisaNet Payment</title>
+  <style>
+    body { font-family: Arial, sans-serif; background-color: #f5f5f5; text-align: center; padding: 50px; direction: rtl; }
+    .container { background: #fff; padding: 20px; border-radius: 10px; display: inline-block; box-shadow: 0 0 10px rgba(0,0,0,0.1); width: 100%; max-width: 400px; }
+    input, select { width: 90%; padding: 10px; margin: 8px 0; border: 1px solid #ccc; border-radius: 5px; }
+    button { background-color: #0070f3; color: #fff; padding: 12px 20px; border: none; border-radius: 5px; cursor: pointer; }
+    button:hover { background-color: #005bb5; }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h2>إتمام الدفع</h2>
+    <form id="paymentForm">
+      <input type="text" id="name" placeholder="الاسم الكامل" required><br>
+      <input type="text" id="company" placeholder="اسم الشركة" required><br>
+      <input type="text" id="address" placeholder="العنوان" required><br>
+      <select id="country" required>
+        <option value="">اختر الدولة</option>
+        <option value="US">الولايات المتحدة</option>
+        <option value="EG">مصر</option>
+        <option value="GB">بريطانيا</option>
+        <option value="AE">الإمارات</option>
+        <option value="FR">فرنسا</option>
+        <!-- يمكنك إضافة المزيد -->
+      </select><br>
+      <button type="submit">ادفع الآن</button>
+    </form>
+  </div>
+
+  <script>
+    document.getElementById('paymentForm').addEventListener('submit', function(e) {
+      e.preventDefault();
+      
+      const name = encodeURIComponent(document.getElementById('name').value);
+      const company = encodeURIComponent(document.getElementById('company').value);
+      const address = encodeURIComponent(document.getElementById('address').value);
+      const country = encodeURIComponent(document.getElementById('country').value);
+      
+      const baseURL = "https://tnzqys-i2.myshopify.com/checkouts/do/83aa4b9c33c0f183639998462cf6732d";
+      
+      // Shopify لا يدعم تمرير بيانات بهذا الشكل رسميًا، لكن يمكنك إضافتها كـ note أو tracking params
+      const fullURL = `${baseURL}?note=${name}+-+${company}+-+${address}+-+${country}`;
+      
+      window.location.href = fullURL;
+    });
+  </script>
+</body>
+</html>
